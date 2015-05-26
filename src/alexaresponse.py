@@ -1,20 +1,27 @@
 #!/usr/bin/python
+from src.respone import Response
 
-class AlexaRequest(object):
 
-	def __init__(self, alexaRequest):
-		self.version = alexaRequest['version']
-		self.sessionAttributes = alexaRequest['sessionAttributes']
+class AlexaResponse(object):
 
-		request = alexaRequest['request']
+    def __init__(self, shouldEndSession):
+        self.version = "1.0"
+        self.shouldEndSession = shouldEndSession
+        self.outputSpeech = {}
+        self.card = {}
 
-		requestType = request['type']
 
-		if requestType == 'LaunchRequest':
-			self.request = LaunchRequest(request['requestId'])
-		elif requestType == 'IntentRequest':
-			self.request = IntentRequest(request['requestId'], request['intent'])
-		elif requestType == 'SessionEndRequest':
-			self.request = SessionEndRequest(request['requestId'], request['reason'])
-		else:
-			self.request = {}
+    def setOutputSpeech(self, speechType = "PlainText", text):
+        self.outputSpeech.type = speechType
+        self.outputSpeech.text = text
+
+
+    def setCard(self, cardType = "Simple", title, subtitle, content):
+        self.card.type = cardType
+        self.card.title = title
+        self.card.subtitle = subtitle
+        self.card.content = content
+
+
+    def __str__(self):
+        return 
