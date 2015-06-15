@@ -3,6 +3,8 @@
 from flask import Flask, request
 import json
 from src.alexarequest import AlexaRequest
+from src.alexaresponse import AlexaResponse
+from src.response import OutputSpeech, Card
 
 app = Flask(__name__)
 
@@ -31,7 +33,22 @@ def handle_alexa_request():
 
 @app.route('/yesterday')
 def oranages():
-    return 'It works'
+    card = Card(title='Test', subtitle='The best card', content='This is a card')
+    speech = OutputSpeech(text='Say this bitch.')
+    
+    sessionAttributes = { 'supportedHoriscopePeriods': 
+        {
+          'daily': True,
+          'weekly': False,
+          'monthly': False
+          }
+      }
+    
+    response = AlexaResponse(sessionAttributes, speech, card, True)
+
+    print(response)
+
+    return str(response)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,27 +1,14 @@
 #!/usr/bin/python
-from src.respone import Response
+from src.response import Response
+import json
 
 
 class AlexaResponse(object):
 
-    def __init__(self, shouldEndSession):
+    def __init__(self, sessionAttributes, outputSpeech, card, shouldEndSession):
         self.version = "1.0"
-        self.shouldEndSession = shouldEndSession
-        self.outputSpeech = {}
-        self.card = {}
-
-
-    def setOutputSpeech(self, speechType = "PlainText", text):
-        self.outputSpeech.type = speechType
-        self.outputSpeech.text = text
-
-
-    def setCard(self, cardType = "Simple", title, subtitle, content):
-        self.card.type = cardType
-        self.card.title = title
-        self.card.subtitle = subtitle
-        self.card.content = content
-
+        self.sessionAttributes = sessionAttributes
+        self.response = Response(outputSpeech, card, shouldEndSession)
 
     def __str__(self):
-        return 
+        return "{\"version\": \"" + self.version + "\", " + "\"sessionAttributes\": " + json.dumps(self.sessionAttributes) + "\", " + "\"response\": " + str(self.response) + "}"
