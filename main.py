@@ -25,18 +25,30 @@ def handle_alexa_request():
 
     print(test.session.getUserId())
 
-    # print (result["version"])
-    # j = json.loads(test)
-    # print (j['version'])
-    return 'test'
+    card = Card(title='Test', subtitle='The best card', content='This is a card')
+    speech = OutputSpeech(text='Say this bitch.')
+
+    sessionAttributes = { 'supportedHoriscopePeriods':
+        {
+          'daily': True,
+          'weekly': False,
+          'monthly': False
+          }
+      }
+    
+    response = AlexaResponse(sessionAttributes, speech, card, True)
+
+    print(response)
+
+    return str(response)
 
 
 @app.route('/yesterday')
 def oranages():
     card = Card(title='Test', subtitle='The best card', content='This is a card')
     speech = OutputSpeech(text='Say this bitch.')
-    
-    sessionAttributes = { 'supportedHoriscopePeriods': 
+
+    sessionAttributes = { 'supportedHoriscopePeriods':
         {
           'daily': True,
           'weekly': False,
